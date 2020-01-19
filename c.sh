@@ -43,12 +43,6 @@ v2ray_conf="${v2ray_conf_dir}/config.json"
 Default_rinetdbbr(){
 rinetdbbr_conf_dir="${conf_dir}/rinetdbbr"
 rinetdbbr_conf="${rinetdbbr_conf_dir}/config.conf"
-rinetdbbr_url="https://github.com/dylanbai8/Onekey_Caddy_PHP7_Sqlite3/raw/master/bbr"
-}
-
-win64_source(){
-bat_url="https://raw.githubusercontent.com/dylanbai8/Onekey_Caddy_PHP7_Sqlite3/master/zip"
-}
 
 #80端口用于签发验证ssl证书
 port1="80"
@@ -56,7 +50,7 @@ port1="80"
 port2="443"
 
 # alterId值越小越省内存
-alterId="8"
+alterId="64"
 #用于websocket分流的随机端口
 let port3=$RANDOM+10000
 
@@ -606,8 +600,7 @@ getdomain=$(cat ${conf_dir}/domain.txt)
 echo -e "${OK} ${GreenBG} 访问网站首页查看 http://${getdomain} ${Font}"
 
 else
-	echo -e "${Error} ${RedBG} 请先执行以下命令安装环境 ${Font}"
-	echo -e "${OK} ${GreenBG} wget -N --no-check-certificate git.io/c.sh && chmod +x c.sh && bash c.sh ${Font}"
+	echo -e "${Error} ${RedBG} 请先安装环境 ${Font}" 
 	exit 1
 fi
 }
@@ -644,8 +637,7 @@ getdomain=$(cat ${conf_dir}/domain.txt)
 echo -e "${OK} ${GreenBG} 访问网站首页查看 http://${getdomain} ${Font}"
 
 else
-	echo -e "${Error} ${RedBG} 请先执行以下命令安装环境 ${Font}"
-	echo -e "${OK} ${GreenBG} wget -N --no-check-certificate git.io/c.sh && chmod +x c.sh && bash c.sh ${Font}"
+	echo -e "${Error} ${RedBG} 请先安装环境 ${Font}"
 	exit 1
 fi
 }
@@ -674,8 +666,7 @@ getdomain=$(cat ${conf_dir}/domain.txt)
 echo -e "${OK} ${GreenBG} 访问网站首页查看 http://${getdomain} ${Font}"
 
 else
-	echo -e "${Error} ${RedBG} 请先执行以下命令安装环境 ${Font}"
-	echo -e "${OK} ${GreenBG} wget -N --no-check-certificate git.io/c.sh && chmod +x c.sh && bash c.sh ${Font}"
+	echo -e "${Error} ${RedBG} 请先安装环境 ${Font}"
 	exit 1
 fi
 }
@@ -704,8 +695,7 @@ getdomain=$(cat ${conf_dir}/domain.txt)
 echo -e "${OK} ${GreenBG} 访问网站首页查看 http://${getdomain} ${Font}"
 
 else
-	echo -e "${Error} ${RedBG} 请先执行以下命令安装环境 ${Font}"
-	echo -e "${OK} ${GreenBG} wget -N --no-check-certificate git.io/c.sh && chmod +x c.sh && bash c.sh ${Font}"
+	echo -e "${Error} ${RedBG} 请先安装环境 ${Font}"
 	exit 1
 fi
 }
@@ -735,8 +725,7 @@ getdomain=$(cat ${conf_dir}/domain.txt)
 echo -e "${OK} ${GreenBG} 访问网站首页查看 http://${getdomain} ${Font}"
 
 else
-	echo -e "${Error} ${RedBG} 请先执行以下命令安装环境 ${Font}"
-	echo -e "${OK} ${GreenBG} wget -N --no-check-certificate git.io/c.sh && chmod +x c.sh && bash c.sh ${Font}"
+	echo -e "${Error} ${RedBG} 请先安装环境 ${Font}"
 	exit 1
 fi
 }
@@ -759,8 +748,7 @@ echo -e "${OK} ${GreenBG} 下载地址为：http:\\${getdomain}\www.zip ${Font}"
 echo -e "${OK} ${Green} 解压密码（由函数随机生成）：${Font} ${unzip_password_w}"
 
 else
-	echo -e "${Error} ${RedBG} 请先执行以下命令安装环境 ${Font}"
-	echo -e "${OK} ${GreenBG} wget -N --no-check-certificate git.io/c.sh && chmod +x c.sh && bash c.sh ${Font}"
+	echo -e "${Error} ${RedBG} 请先安装环境 ${Font}"
 	exit 1
 fi
 }
@@ -864,36 +852,6 @@ judge "客户端json配置"
 }
 
 
-#生成Windows客户端
-win64_v2ray(){
-	win64_source
-	TAG_URL="https://api.github.com/repos/v2ray/v2ray-core/releases/latest"
-	NEW_VER=`curl -s ${TAG_URL} --connect-timeout 10| grep 'tag_name' | cut -d\" -f4`
-
-	echo -e "${OK} ${GreenBG} 正在生成Windows客户端 v2ray-core最新版本 ${NEW_VER} ${Font}"
-	rm -rf ./V2rayPro
-	mkdir ./V2rayPro
-	mkdir ./V2rayPro/v2ray
-	wget --no-check-certificate https://github.com/v2ray/v2ray-core/releases/download/${NEW_VER}/v2ray-windows-64.zip -O v2ray.zip
-	unzip v2ray.zip -d ./V2rayPro/v2ray
-	wget --no-check-certificate ${bat_url} -O bat.zip
-	unzip bat.zip
-	mv bat ./V2rayPro/start.bat
-	mv exe ./V2rayPro/v2ray/wv2ray-service.exe
-
-	v2ray_user_config
-
-	echo -e "${OK} ${GreenBG} 正在打包 v2ray-windows-64 客户端 ${Font}"
-
-	rm -rf ${wwwroot}/V2rayPro.zip
-	zip -q -r -P ${unzip_password_v} ${wwwroot}/V2rayPro.zip ./V2rayPro
-	judge "Windows 客户端打包成功"
-
-	rm -rf v2ray.zip
-	rm -rf bat.zip
-	rm -rf ./V2rayPro
-}
-
 
 #展示v2ray客户端配置信息
 v2ray_information(){
@@ -917,7 +875,6 @@ v2ray_information(){
 	echo ""
 	echo -e "${Green} 注意：伪装路径不要少写 [ / ] ${Font}"
 	echo -e "${Green} Windows系统64位客户端下载：${Font} http:\\${getdomain}\V2rayPro.zip"
-	echo -e "${Green} 解压密码（由函数随机生成）：${Font} ${unzip_password_v}"
 	echo ""
 	echo -e "----------------------------------------------------------"
 }
@@ -974,72 +931,16 @@ WantedBy=multi-user.target
 EOF
 
 	v2ray_conf_add
-	win64_v2ray
+	# win64_v2ray
 	v2ray_information
 	restart_v2ray
 
 else
-	echo -e "${Error} ${RedBG} 请先执行以下命令安装环境 ${Font}"
-	echo -e "${OK} ${GreenBG} wget -N --no-check-certificate git.io/c.sh && chmod +x c.sh && bash c.sh ${Font}"
+	echo -e "${Error} ${RedBG} 请先安装环境 ${Font}"
 	exit 1
 fi
 }
 
-
-#安装bbr端口加速
-rinetdbbr_install(){
-Default_dir
-if [[ -e ${conf_dir} ]]; then
-echo -e "${OK} ${GreenBG} 正在安装 Rinetdbbr 请稍后 ... ${Font}"
-	Default_rinetdbbr
-	rm -rf ${rinetdbbr_conf_dir}
-	mkdir ${rinetdbbr_conf_dir}
-
-	getport2=$(cat ${conf_dir}/port2.txt)
-
-	wget --no-check-certificate ${rinetdbbr_url} -O rinetdbbr
-	mv rinetdbbr /usr/bin/rinetd-bbr
-	chmod +x /usr/bin/rinetd-bbr
-	judge "rinetd-bbr 安装"
-
-	IFACE=$(ip -4 addr | awk '{if ($1 ~ /inet/ && $NF ~ /^[ve]/) {a=$NF}} END{print a}')
-
-	touch ${rinetdbbr_conf}
-	cat <<EOF >> ${rinetdbbr_conf}
-0.0.0.0 ${getport2} 0.0.0.0 ${getport2}
-EOF
-
-	touch /etc/systemd/system/rinetd-bbr.service
-	cat <<EOF > /etc/systemd/system/rinetd-bbr.service
-[Unit]
-Description=Rinetdbbr Service
-After=network.target
-Wants=network.target
-
-[Service]
-Type=simple
-PIDFile=/var/run/rinetd-bbr.pid
-ExecStart=/usr/bin/rinetd-bbr -f -c ${rinetdbbr_conf_dir} raw ${IFACE}
-RestartPreventExitStatus=23
-Restart=always
-User=root
-
-[Install]
-WantedBy=multi-user.target
-EOF
-	judge "rinetd-bbr 自启动配置"
-
-	systemctl daemon-reload
-	systemctl enable rinetd-bbr >/dev/null 2>&1
-	systemctl start rinetd-bbr
-	judge "加速端口：${getport2} 启动 rinetd-bbr"
-
-else
-	echo -e "${Error} ${RedBG} 请先执行以下命令安装环境 ${Font}"
-	echo -e "${OK} ${GreenBG} wget -N --no-check-certificate git.io/c.sh && chmod +x c.sh && bash c.sh ${Font}"
-	exit 1
-fi
-}
 
 
 #命令块执行列表
@@ -1087,9 +988,6 @@ if [[ $# > 0 ]];then
 		;;
 		-v|--v2ray_install)
 		v2ray_install
-		;;
-		-b|--rinetdbbr_install)
-		rinetdbbr_install
 		;;
 		-unc|--uninstall_caddy)
 		uninstall_caddy
