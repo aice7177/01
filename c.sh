@@ -6,8 +6,8 @@
 #	* 小内存VPS 一键安装 Caddy+PHP7+Sqlite3 环境 （支持VPS最小内存64M）
 #	* 一键绑定域名自动生成SSL证书开启https（ssl自动续期）、支持IPv6
 #	* 一键安装 typecho、wordpress、zblog、kodexplorer、laverna、一键整站备份
-#	* 一键安装 v2ray、rinetdbbr
-#	* 经典组合 [Website(caddy+php7+sqlite3+tls)+V2ray(vmess+websocket)]use_path+Rinetdbbr
+#	* 一键安装 v2ray
+#	* 经典组合 [Website(caddy+php7+sqlite3+tls)+V2ray(vmess+websocket)]use_path
 #	* 推荐系统：Debian 8 （建议选择mini版）
 #	* 开源地址：https://github.com/dylanbai8/Onekey_Caddy_PHP7_Sqlite3
 #	Blog: https://oo0.bid
@@ -40,9 +40,6 @@ v2ray_conf_dir="${conf_dir}/v2ray"
 v2ray_conf="${v2ray_conf_dir}/config.json"
 }
 
-Default_rinetdbbr(){
-rinetdbbr_conf_dir="${conf_dir}/rinetdbbr"
-rinetdbbr_conf="${rinetdbbr_conf_dir}/config.conf"
 
 #80端口用于签发验证ssl证书
 port1="80"
@@ -98,12 +95,10 @@ if [[ -e ${conf_dir} ]]; then
 	echo -e "${Green} 一键安装 laverna 印象笔记：${Font} bash c.sh -l"
 	echo -e "${Green} 一键整站备份：${Font} bash c.sh -a"
 	echo -e "${Green} 一键安装 v2ray 翻墙：${Font} bash c.sh -v"
-	echo -e "${Green} 一键安装 rinetd bbr 端口加速：${Font} bash c.sh -b"
 	echo ""
 	echo -e "${Green} 一键卸载 caddy：${Font} bash c.sh -unc"
 	echo -e "${Green} 一键卸载 php+sqlite：${Font} bash c.sh -unp"
 	echo -e "${Green} 一键卸载 v2ray：${Font} bash c.sh -unv"
-	echo -e "${Green} 一键卸载 rinetdbbr：${Font} bash c.sh -unb"
 	echo ""
 	echo -e "${Green} 提示：如果在上次执行中由于错误而中断了安装，请先执行 一键卸载 caddy ${Font}"
 	echo ""
@@ -308,25 +303,6 @@ rm -rf ${v2ray_conf_dir} >/dev/null 2>&1
 rm -rf /etc/systemd/system/v2ray.service >/dev/null 2>&1
 
 ${INS} ${UNS} bc lsof ntpdate -y >/dev/null 2>&1
-echo -e "${OK} ${GreenBG} 操作已完成 ${Font}"
-}
-
-
-#卸载bbr
-uninstall_bbr(){
-Default_dir
-Default_rinetdbbr
-check_system
-
-echo -e "${OK} ${GreenBG} 正在卸载 rinetdbbr 请稍后 ... ${Font}"
-systemctl disable rinetd-bbr >/dev/null 2>&1
-systemctl stop rinetd-bbr >/dev/null 2>&1
-killall -9 rinetd-bbr >/dev/null 2>&1
-
-rm -rf /usr/bin/rinetd-bbr >/dev/null 2>&1
-rm -rf ${rinetdbbr_conf_dir} >/dev/null 2>&1
-rm -rf /etc/systemd/system/rinetd-bbr.service >/dev/null 2>&1
-
 echo -e "${OK} ${GreenBG} 操作已完成 ${Font}"
 }
 
@@ -997,9 +973,6 @@ if [[ $# > 0 ]];then
 		;;
 		-unv|--uninstall_v2ray)
 		uninstall_v2ray
-		;;
-		-unb|--uninstall_bbr)
-		uninstall_bbr
 		;;
 	esac
 else
