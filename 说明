@@ -5,11 +5,13 @@
 
 
 脚本特性：
-小内存VPS 一键安装 Caddy+PHP7+Sqlite3 环境 （支持VPS最小内存64M）
 一键绑定域名自动生成SSL证书开启https（ssl自动续期）、支持IPv6
 一键安装 typecho、wordpress、zblog、kodexplorer、laverna、一键整站备份
 经典组合 [Website(caddy+php7+sqlite3+tls)+V2ray(vmess+websocket)]use_path+Rinetdbbr
 一键安装 Caddy+PHP7+Sqlite3 环境
+
+wordpress如果出现问题的话执行"apt-get install php7.0-mysql"
+
 1.解析好域名 2.执行以下命令
 3.提示：支持IPv6（AAAA记录）如果本地网络不支持IPv6可以通过cloudflareCDN转换为IP4
 wget -N --no-check-certificate https://raw.githubusercontent.com/aice7177/01/master/c.sh && chmod +x c.sh && bash c.sh
