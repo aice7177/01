@@ -10,7 +10,6 @@
 经典组合 [Website(caddy+php7+sqlite3+tls)+V2ray(vmess+websocket)]use_path+Rinetdbbr
 一键安装 Caddy+PHP7+Sqlite3 环境
 
-wordpress如果出现问题的话执行"apt-get install php7.0-mysql"
 
 1.解析好域名 2.执行以下命令
 3.提示：支持IPv6（AAAA记录）如果本地网络不支持IPv6可以通过cloudflareCDN转换为IP4
@@ -20,6 +19,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/aice7177/01/mas
 bash c.sh -t
 一键安装 wordpress 博客
 bash c.sh -w
+wordpress如果出现问题的话执行"apt-get install php7.0-mysql"
 一键安装 zblog 博客
 bash c.sh -z
 一键安装 kodexplorer 可道云
