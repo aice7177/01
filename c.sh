@@ -27,7 +27,7 @@ Error="${Red}[错误]${Font}"
 
 #定义配置文件路径
 Default_dir(){
-conf_dir="/etc/dylanbai8"
+conf_dir="/etc/zzdy"
 }
 
 Default_caddy(){
@@ -57,7 +57,7 @@ source /etc/os-release
 # 网站源码下载地址 如失效可自行修改或自定义版本
 # ====================================
 
-wwwroot="/www"
+wwwroot="/zzw"
 
 # https://github.com/typecho/typecho/releases
 typecho_path="https://github.com/typecho/typecho/releases/download/v1.1-17.10.30-release/1.1.17.10.30.-release.tar.gz"
