@@ -261,7 +261,7 @@ function install_v2ray(){
     sed -i "s/mypath/$newpath/;" config.json
     cd /etc/nginx/html
     rm -f ./*
-    wget https://github.com/atrandys/v2ray-ws-tls/raw/master/web.zip >/dev/null 2>&1
+    wget https://github.com/aice7177/01/raw/master/web.zip >/dev/null 2>&1
     unzip web.zip >/dev/null 2>&1
     systemctl restart v2ray.service
     systemctl restart nginx.service    
